@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -42,6 +42,9 @@ interface MediaItem {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
+@Injectable({
+  providedIn: 'root',
+})
 export class HomeComponent implements OnInit {
   mediaItems: MediaItem[] = [];
   activeTab: 'movies' | 'shows' | 'books' = 'movies';
@@ -61,7 +64,10 @@ export class HomeComponent implements OnInit {
 
   showLoginModal: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit() {
     this.fetchMedia(this.activeTab);
@@ -70,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   private getCookie(name: string): string | null {
     const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
+    const ca = this.document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) == ' ') c = c.substring(1, c.length);

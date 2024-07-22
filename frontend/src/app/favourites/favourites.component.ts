@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 interface User {
   _id: string;
@@ -29,17 +35,26 @@ interface MediaItem {
   templateUrl: './favourites.component.html',
   styleUrl: './favourites.component.css',
 })
+@Injectable({
+  providedIn: 'root',
+})
 export class FavouritesComponent implements OnInit {
   user: User | null = null;
   favoriteItems: MediaItem[] = [];
   IMGPATH = 'https://image.tmdb.org/t/p/w1280';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    const userEmail = this.getCookie('userEmail');
-    if (userEmail) {
-      this.getUserDetails(userEmail);
+    if (isPlatformBrowser(this.platformId)) {
+      const userEmail = this.getCookie('userEmail');
+      if (userEmail) {
+        this.getUserDetails(userEmail);
+      }
     }
   }
 
@@ -101,12 +116,14 @@ export class FavouritesComponent implements OnInit {
   }
 
   private getCookie(name: string): string | null {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    if (isPlatformBrowser(this.platformId)) {
+      const nameEQ = name + '=';
+      const ca = this.document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
     }
     return null;
   }

@@ -76,10 +76,6 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-const getUserProfile = async (req, res) => {
-  // Implement logic to get user profile
-};
-
 const addFavourites = async (req, res) => {
   const { email, favorites } = req.body;
 
@@ -115,7 +111,6 @@ const addFavourites = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  getUserProfile,
   logoutUser,
   addFavourites,
   getUser,
