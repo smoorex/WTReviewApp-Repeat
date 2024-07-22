@@ -59,16 +59,18 @@ export class FavouritesComponent implements OnInit {
   }
 
   private getUserDetails(email: string) {
-    this.http.get<User>(`users/${email}`).subscribe(
-      (userData) => {
-        this.user = userData;
-        console.log('User details:', this.user);
-        this.getFavoriteItems();
-      },
-      (error) => {
-        console.error('Error fetching user details:', error);
-      }
-    );
+    this.http
+      .get<User>(`https://wtreviewapp-repeat.onrender.com/users/${email}`)
+      .subscribe(
+        (userData) => {
+          this.user = userData;
+          console.log('User details:', this.user);
+          this.getFavoriteItems();
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+        }
+      );
   }
 
   private getFavoriteItems() {
