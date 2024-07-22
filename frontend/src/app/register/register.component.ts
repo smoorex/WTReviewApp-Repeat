@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     };
 
     this.http
-      .post('http://localhost:8000/users/register', registerData)
+      .post('https://seans-review-app.netlify.app/', registerData)
       .subscribe(
         (response: any) => {
           console.log('Registration successful', response);

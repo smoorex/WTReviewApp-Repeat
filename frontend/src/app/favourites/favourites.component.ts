@@ -59,7 +59,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   private getUserDetails(email: string) {
-    this.http.get<User>(`http://localhost:8000/users/${email}`).subscribe(
+    this.http.get<User>(`users/${email}`).subscribe(
       (userData) => {
         this.user = userData;
         console.log('User details:', this.user);
