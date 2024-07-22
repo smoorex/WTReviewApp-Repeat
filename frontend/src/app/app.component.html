@@ -1,10 +1,38 @@
-<nav>
-  <ul>
-    <li><a routerLink="/reviews"  routerLinkActive="active" ariaCurrentWhenActive="page">Home</a></li>
-    <li><a routerLink="/register"  routerLinkActive="active" ariaCurrentWhenActive="page">Register</a></li>
-    <li><a routerLink="/login"  routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
-    <li><a routerLink="/add-review"  routerLinkActive="active" ariaCurrentWhenActive="page">Add Review</a></li>
-  </ul>
-</nav>
+<style>
+  main {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: inherit;
+    position: relative;
+    gap: 1rem;
+  }
 
-<router-outlet></router-outlet>
+  .content {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  .help {
+    color: red;
+  }
+</style>
+
+<main class="main">
+  <h1>{{ title }}</h1>
+  <a routerLink="login">Login</a>
+  <a routerLink="register">Register</a>
+  <a routerLink="home">Home</a>
+  <a routerLink="favourites">Favourites</a>
+  <p class="help">
+    The app should be a movie/book/tv show review app where you write reviews
+    and they are presented to the user.
+  </p>
+</main>
+
+<router-outlet />

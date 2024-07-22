@@ -1,0 +1,80 @@
+<nav>
+  <ul>
+    <li
+      [class.active]="activeTab === 'movies'"
+      (click)="setActiveTab('movies')"
+    >
+      Movies
+    </li>
+    <li [class.active]="activeTab === 'shows'" (click)="setActiveTab('shows')">
+      TV Shows
+    </li>
+    <li [class.active]="activeTab === 'books'" (click)="setActiveTab('books')">
+      Books
+    </li>
+  </ul>
+</nav>
+
+<div class="media-container" *ngIf="!selectedItem">
+  <div
+    *ngFor="let item of mediaItems"
+    class="media-item"
+    [id]="item.id"
+    (click)="openItem(item)"
+  >
+    <img
+      [src]="
+        activeTab === 'books' ? item.cover_image : IMGPATH + item.poster_path
+      "
+      [alt]="item.title"
+    />
+    <div class="media-info">
+      <h3>{{ item.title }}</h3>
+      <span>{{ item.rating }}</span>
+    </div>
+    <button (click)="addToFavorites(item)">Add to Favorites</button>
+  </div>
+</div>
+
+<div *ngIf="selectedItem" class="item-details">
+  <button (click)="closeItem()">Back to List</button>
+  <h2>{{ selectedItem.title }}</h2>
+  <img
+    [src]="
+      activeTab === 'books'
+        ? selectedItem.cover_image
+        : IMGPATH + selectedItem.poster_path
+    "
+    [alt]="selectedItem.title"
+  />
+  <p>{{ selectedItem.overview || selectedItem.description }}</p>
+  <h3>Comments</h3>
+  <div *ngIf="selectedItem.comments === undefined">Loading comments...</div>
+  <ul *ngIf="selectedItem.comments !== undefined">
+    <li *ngIf="selectedItem.comments.length === 0">No comments yet.</li>
+    <li *ngFor="let comment of selectedItem.comments">
+      <p>{{ comment.content }}</p>
+      <small
+        >Posted by: {{ comment.author }} on
+        {{ comment.createdAt | date : "medium" }}</small
+      >
+    </li>
+  </ul>
+  <form (ngSubmit)="submitComment()">
+    <textarea
+      [(ngModel)]="newComment"
+      name="comment"
+      placeholder="Add your comment"
+    ></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
+</div>
+
+<div *ngIf="showLoginModal" class="modal">
+  <div class="modal-content">
+    <h2>Please Log In</h2>
+    <p>You need to be logged in to post a comment.</p>
+    <a href="/login">Go to Login Page</a>
+    <button (click)="closeLoginModal()">Close</button>
+  </div>
+</div>

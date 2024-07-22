@@ -1,0 +1,168 @@
+nav {
+  background-color: #373b69;
+  padding: 1rem;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  color: #fff;
+  cursor: pointer;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav li.active {
+  background-color: #22254b;
+}
+
+.media-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.media-item {
+  width: 300px;
+  background-color: #373b69;
+  border-radius: 3px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.media-item img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.media-info {
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 1rem;
+  letter-spacing: 0.5px;
+}
+
+.media-info h3 {
+  margin-top: 0;
+}
+
+.media-info span {
+  background-color: #22254b;
+  border-radius: 3px;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+}
+
+.item-details {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #373b69;
+  color: #fff;
+}
+
+.item-details img {
+  max-width: 100%;
+  height: auto;
+}
+
+.item-details button {
+  background-color: #22254b;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.item-details h2 {
+  margin-top: 0;
+}
+
+.item-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.item-details li {
+  background-color: #22254b;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.item-details form {
+  margin-top: 20px;
+}
+
+.item-details textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.item-details form button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.modal-content button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
