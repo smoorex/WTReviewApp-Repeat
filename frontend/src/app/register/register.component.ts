@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     };
 
     this.http
-      .post('https://seans-review-app.netlify.app/', registerData)
+      .post('https://wtreviewapp-repeat.onrender.com/', registerData)
       .subscribe(
         (response: any) => {
           console.log('Registration successful', response);

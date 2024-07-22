@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.http
-      .post('https://seans-review-app.netlify.app/', loginData)
+      .post('https://wtreviewapp-repeat.onrender.com/', loginData)
       .subscribe(
         (response: any) => {
           console.log('Login successful', response);

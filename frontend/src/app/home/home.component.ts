@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
   fetchComments(itemId: number) {
     this.http
       .get<Comment[]>(
-        `https://seans-review-app.netlify.app/comments/${itemId}/`
+        `https://wtreviewapp-repeat.onrender.com/comments/${itemId}/`
       )
       .subscribe(
         (response: Comment[]) => {
@@ -128,7 +128,7 @@ export class HomeComponent implements OnInit {
 
     this.http
       .post<Comment>(
-        `https://seans-review-app.netlify.app/comments/${postId}/`,
+        `https://wtreviewapp-repeat.onrender.com/comments/${postId}/`,
         {
           content,
           author: this.userEmail,
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.http
-      .post(`https://seans-review-app.netlify.app/users/favourites/`, {
+      .post(`https://wtreviewapp-repeat.onrender.com/users/favourites/`, {
         email: this.userEmail,
         favorites: [favorite],
       })
