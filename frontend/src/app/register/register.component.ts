@@ -54,7 +54,10 @@ export class RegisterComponent implements OnInit {
     };
 
     this.http
-      .post('https://wtreviewapp-repeat.onrender.com/', registerData)
+      .post(
+        'https://wtreviewapp-repeat.onrender.com/users/register',
+        registerData
+      )
       .subscribe(
         (response: any) => {
           console.log('Registration successful', response);

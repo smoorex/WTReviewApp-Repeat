@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.http
-      .post('https://wtreviewapp-repeat.onrender.com/', loginData)
+      .post('https://wtreviewapp-repeat.onrender.com/users/login', loginData)
       .subscribe(
         (response: any) => {
           console.log('Login successful', response);
