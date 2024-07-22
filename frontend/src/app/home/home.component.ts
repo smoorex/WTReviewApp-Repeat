@@ -101,7 +101,9 @@ export class HomeComponent implements OnInit {
 
   fetchComments(itemId: number) {
     this.http
-      .get<Comment[]>(`http://localhost:8000/comments/${itemId}/`)
+      .get<Comment[]>(
+        `https://wtreviewapp-repeat.onrender.com/comments/${itemId}/`
+      )
       .subscribe(
         (response: Comment[]) => {
           // console.log('Fetched comments successful', response);
@@ -125,10 +127,13 @@ export class HomeComponent implements OnInit {
     }
 
     this.http
-      .post<Comment>(`http://localhost:8000/comments/${postId}/`, {
-        content,
-        author: this.userEmail,
-      })
+      .post<Comment>(
+        `https://wtreviewapp-repeat.onrender.com/comments/${postId}/`,
+        {
+          content,
+          author: this.userEmail,
+        }
+      )
       .subscribe(
         (response: Comment) => {
           // console.log('Posted comment successfully', response);
@@ -180,7 +185,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.http
-      .post(`http://localhost:8000/users/favourites/`, {
+      .post(`https://wtreviewapp-repeat.onrender.com/users/favourites/`, {
         email: this.userEmail,
         favorites: [favorite],
       })

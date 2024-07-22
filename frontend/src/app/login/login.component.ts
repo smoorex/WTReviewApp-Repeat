@@ -44,20 +44,22 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    this.http.post('http://localhost:8000/users/login', loginData).subscribe(
-      (response: any) => {
-        console.log('Login successful', response);
-        if (isPlatformBrowser(this.platformId)) {
-          this.setCookie('token', response.token, 1);
-          this.setCookie('userEmail', response.email, 1);
-          this.setCookie('userId', response.id, 1);
+    this.http
+      .post('https://wtreviewapp-repeat.onrender.com/', loginData)
+      .subscribe(
+        (response: any) => {
+          console.log('Login successful', response);
+          if (isPlatformBrowser(this.platformId)) {
+            this.setCookie('token', response.token, 1);
+            this.setCookie('userEmail', response.email, 1);
+            this.setCookie('userId', response.id, 1);
+          }
+          this.user = { email: response.email };
+        },
+        (error) => {
+          console.error('Login failed', error);
         }
-        this.user = { email: response.email };
-      },
-      (error) => {
-        console.error('Login failed', error);
-      }
-    );
+      );
   }
 
   logout() {
