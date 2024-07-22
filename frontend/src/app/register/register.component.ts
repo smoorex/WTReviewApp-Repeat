@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +16,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+@Injectable({
+  providedIn: 'root',
+})
+export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -18,8 +27,16 @@ export class RegisterComponent {
   });
   user: any = null;
 
-  constructor(private http: HttpClient) {
-    this.checkLoginStatus();
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkLoginStatus();
+    }
   }
 
   registerApplication() {
@@ -41,8 +58,10 @@ export class RegisterComponent {
       .subscribe(
         (response: any) => {
           console.log('Registration successful', response);
-          this.setCookie('token', response.token, 1);
-          this.setCookie('userEmail', response.email, 1);
+          if (isPlatformBrowser(this.platformId)) {
+            this.setCookie('token', response.token, 1);
+            this.setCookie('userEmail', response.email, 1);
+          }
           this.user = { email: response.email };
         },
         (error) => {
@@ -52,35 +71,43 @@ export class RegisterComponent {
   }
 
   logout() {
-    this.deleteCookie('token');
-    this.deleteCookie('userEmail');
+    if (isPlatformBrowser(this.platformId)) {
+      this.deleteCookie('token');
+      this.deleteCookie('userEmail');
+    }
     this.user = null;
   }
 
   private setCookie(name: string, value: string, hours: number) {
-    let expires = '';
-    if (hours) {
-      const date = new Date();
-      date.setTime(date.getTime() + hours * 60 * 60 * 1000);
-      expires = '; expires=' + date.toUTCString();
+    if (isPlatformBrowser(this.platformId)) {
+      let expires = '';
+      if (hours) {
+        const date = new Date();
+        date.setTime(date.getTime() + hours * 60 * 60 * 1000);
+        expires = '; expires=' + date.toUTCString();
+      }
+      this.document.cookie = name + '=' + (value || '') + expires + '; path=/';
     }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
   }
 
   private getCookie(name: string): string | null {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    if (isPlatformBrowser(this.platformId)) {
+      const nameEQ = name + '=';
+      const ca = this.document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
     }
     return null;
   }
 
   private deleteCookie(name: string) {
-    document.cookie =
-      name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    if (isPlatformBrowser(this.platformId)) {
+      this.document.cookie =
+        name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
   }
 
   private checkLoginStatus() {
