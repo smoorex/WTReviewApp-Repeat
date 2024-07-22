@@ -1,0 +1,39 @@
+<section>
+  <h1>REGISTER</h1>
+  <div class="content">
+    <div *ngIf="!user; else registered">
+      <form
+        [formGroup]="registerForm"
+        class="form"
+        (submit)="registerApplication()"
+      >
+        <div class="top-form">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" />
+          <label for="password">Password</label>
+          <input id="password" type="password" formControlName="password" />
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+          />
+        </div>
+        <div class="bottom-form">
+          <button type="submit" class="register-btn">REGISTER</button>
+          <p>
+            Already have an account?
+            <a class="login-btn" href="/login">Login</a>
+          </p>
+        </div>
+      </form>
+    </div>
+    <ng-template #registered>
+      <div class="welcome-message">
+        <h2>Welcome, {{ user.email }}!</h2>
+        <p>You have successfully registered and are now logged in.</p>
+        <button (click)="logout()" class="logout-btn">Logout</button>
+      </div>
+    </ng-template>
+  </div>
+</section>
